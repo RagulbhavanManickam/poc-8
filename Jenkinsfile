@@ -18,10 +18,10 @@ pipeline {
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=poc-8 \
                             -Dsonar.sources=."
+                    }
+                }
             }
         }
-    }
-}
 
         stage('Deploy to Docker Server') {
             steps {
