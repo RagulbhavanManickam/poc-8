@@ -13,14 +13,15 @@ pipeline {
         stage('Code Analysis - SonarQube') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        sonar-scanner \
-                          -Dsonar.projectKey=poc-8 \
-                          -Dsonar.sources=.
-                    '''
-                }
+                    script {
+                        def scannerHome = tool 'SonarQube-Scanner'
+                        sh "${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=poc-8 \
+                            -Dsonar.sources=."
             }
         }
+    }
+}
 
         stage('Deploy to Docker Server') {
             steps {
