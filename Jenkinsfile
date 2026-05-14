@@ -6,7 +6,7 @@ pipeline {
         stage('Pull Code') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/your-username/poc-8.git'
+                    url: 'https://github.com/RagulbhavanManickam/poc-8.git'
             }
         }
 
