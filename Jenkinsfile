@@ -25,13 +25,16 @@ pipeline {
 
         stage('Deploy to Docker Server') {
             steps {
-                sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@172.31.30.55 'docker pull nginx:latest && \
-                    docker stop my-app || true && \
-                    docker rm my-app || true && \
-                    docker build -t my-app . && \
-                    docker run -d --name my-app -p 80:80 my-app'
-                '''
+                sh """
+                    scp -o StrictHostKeyChecking=no Dockerfile ubuntu@172.31.30.55:/home/ubuntu/
+                    scp -o StrictHostKeyChecking=no index.html ubuntu@172.31.30.55:/home/ubuntu/
+                    ssh -o StrictHostKeyChecking=no ubuntu@172.31.30.55 '
+                        sudo docker stop my-app || true
+                        sudo docker rm my-app || true
+                        sudo docker build -t my-app /home/ubuntu/
+                        sudo docker run -d --name my-app -p 80:80 my-app
+                    '
+                """
             }
         }
     }
