@@ -26,7 +26,7 @@ pipeline {
         stage('Deploy to Docker Server') {
             steps {
                 sh '''
-                    ssh ubuntu@<your-docker-server-private-ip> "
+                    ssh ubuntu@172.31.30.55"
                         docker pull nginx:latest
                         docker stop my-app || true
                         docker rm my-app || true
