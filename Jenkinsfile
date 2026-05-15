@@ -26,13 +26,11 @@ pipeline {
         stage('Deploy to Docker Server') {
             steps {
                 sh '''
-                    ssh ubuntu@172.31.30.55"
-                        docker pull nginx:latest
-                        docker stop my-app || true
-                        docker rm my-app || true
-                        docker build -t my-app .
-                        docker run -d --name my-app -p 80:80 my-app
-                    "
+                    ssh -o StrictHostKeyChecking=no ubuntu@172.31.30.55 'docker pull nginx:latest && \
+                    docker stop my-app || true && \
+                    docker rm my-app || true && \
+                    docker build -t my-app . && \
+                    docker run -d --name my-app -p 80:80 my-app'
                 '''
             }
         }
